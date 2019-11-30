@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import logo from './logo.svg';
 import { Button, Col, Container, Row } from 'reactstrap';
