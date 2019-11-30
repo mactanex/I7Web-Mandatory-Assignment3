@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import { Button, Col, Container, Row } from 'reactstrap';
-import './App.css';
+import './App.scss';
 
 import Game from './Game/Game';
 
