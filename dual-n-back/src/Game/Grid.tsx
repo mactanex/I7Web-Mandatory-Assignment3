@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './Grid.css';
+import './Grid.scss';
 
 export interface IProps {
     columns: number;
