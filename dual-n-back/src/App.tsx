@@ -21,11 +21,6 @@ class App extends React.Component<{}, IState> {
       gridSize: 3,
       score: 0
     };
-
-    this.setGridSize = this.setGridSize.bind(this);
-    this.onPlay = this.onPlay.bind(this);
-    this.onPause = this.onPause.bind(this);
-    this.onScoreChange = this.onScoreChange.bind(this);
   }
 
   public render() {
@@ -85,21 +80,21 @@ class App extends React.Component<{}, IState> {
     );
   }
 
-  private setGridSize(e: any) {
+  private setGridSize = (e: any) => {
     this.setState({ gridSize: e.target.value });
-  }
+  };
 
-  private onPlay(e: any) {
+  private onPlay = (e: any) => {
     this.setState({ gameRunning: true });
-  }
+  };
 
-  private onPause(e: any) {
+  private onPause = (e: any) => {
     this.setState({ gameRunning: false });
-  }
+  };
 
-  private onScoreChange(prevScore: number, nextScore: number) {
+  private onScoreChange = (prevScore: number, nextScore: number) => {
     this.setState({ score: nextScore });
-  }
+  };
 }
 
 export default App;

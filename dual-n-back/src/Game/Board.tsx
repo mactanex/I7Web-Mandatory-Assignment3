@@ -16,10 +16,6 @@ class Board {
 
   public start(onFlash: (flash: Flash) => void) {
     this.onFlash = onFlash;
-
-    // window.setTimeout(() => {
-    //     onFlash(this.next());
-    // }, 10000);
     this.timerToken = window.setInterval(() => onFlash(this.next()), 2500);
   }
 
