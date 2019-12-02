@@ -1,10 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
-import logo from './logo.svg';
-import { Button, Col, Container, Row } from 'reactstrap';
-import './App.scss';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import logo from "./logo.svg";
+import { Button, Col, Container, Row } from "reactstrap";
+import "./App.scss";
 
-import Game from './Game/Game';
+import Game from "./Game/Game";
 
 export interface IState {
   gameRunning: boolean;
@@ -13,14 +13,13 @@ export interface IState {
 }
 
 class App extends React.Component<{}, IState> {
-
   constructor(props: any) {
     super(props);
 
     this.state = {
       gameRunning: false,
       gridSize: 3,
-      score: 0,
+      score: 0
     };
 
     this.setGridSize = this.setGridSize.bind(this);
@@ -31,24 +30,49 @@ class App extends React.Component<{}, IState> {
 
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+      <div className='App'>
+        <header className='App-header'>
+          <img src={logo} className='App-logo' alt='logo' />
+          <h1 className='App-title'>Welcome to React</h1>
         </header>
         <Container>
           <Row>
-            <Col xs="3">
-              <input type="range" min="3" max="5" className="slider" value={this.state.gridSize} onInput={this.setGridSize} onChange={this.setGridSize} />
+            <Col xs='3'>
+              <input
+                type='range'
+                min='3'
+                max='5'
+                className='slider'
+                value={this.state.gridSize}
+                onInput={this.setGridSize}
+                onChange={this.setGridSize}
+              />
             </Col>
-            <Col xs="6">
-              <Game rows={this.state.gridSize} columns={this.state.gridSize} running={this.state.gameRunning} onScoreChange={this.onScoreChange} />
+            <Col xs='6'>
+              <Game
+                rows={this.state.gridSize}
+                columns={this.state.gridSize}
+                running={this.state.gameRunning}
+                onScoreChange={this.onScoreChange}
+              />
             </Col>
-            <Col xs="3">
+            <Col xs='3'>
               <Row>
-                <Col xs="12">
-                  <Button color="primary" className={this.state.gameRunning ? 'hidden' : ''} onClick={this.onPlay}>Play</Button>
-                  <Button color="primary" className={!this.state.gameRunning ? 'hidden' : ''} onClick={this.onPause}>Pause</Button>
+                <Col xs='12'>
+                  <Button
+                    color='primary'
+                    className={this.state.gameRunning ? "hidden" : ""}
+                    onClick={this.onPlay}
+                  >
+                    Play
+                  </Button>
+                  <Button
+                    color='primary'
+                    className={!this.state.gameRunning ? "hidden" : ""}
+                    onClick={this.onPause}
+                  >
+                    Pause
+                  </Button>
                 </Col>
               </Row>
               <Row>
