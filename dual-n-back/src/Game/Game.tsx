@@ -40,7 +40,7 @@ class Game extends React.Component<IProps, IState> {
     return nextState;
   }
 
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
 
     this.state = {

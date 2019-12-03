@@ -10,7 +10,7 @@ const logger = require("morgan");
 const db = require("./DAL/db");
 
 const apiIndexRouter = require("./routes/index");
-// const apiExerciseRouter = require("./app_api/routes/exerciseProgram");
+const apiHighscoreRouter = require("./routes/highscore");
 
 const app = express();
 const cors = require("cors");
@@ -27,12 +27,12 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api", apiIndexRouter);
-// app.use("/api", apiExerciseRouter);
-// app.get("*", (req, res) => {
-//   res.sendFile("dist/ExerciseWorker/index.html", {
-//     root: __dirname
-//   });
-// })
+app.use("/api", apiHighscoreRouter);
+app.get("*", (req, res) => {
+  res.sendFile("dist/ExerciseWorker/index.html", {
+    root: __dirname
+  });
+})
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -81,3 +81,4 @@ wsServer.on("connection", websocket => {
 });
 
 module.exports = app;
+module.exports.wsServer = wsServer;
