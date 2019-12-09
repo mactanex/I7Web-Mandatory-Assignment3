@@ -1,7 +1,11 @@
 import React from 'react';
 import { useFormik } from 'formik';
 
+
 export function LoginForm() {
+
+   
+
     // Pass the useFormik() hook initial form values and a submit function that will
     // be called when the form is submitted
     const formik = useFormik({
@@ -18,6 +22,7 @@ export function LoginForm() {
             <label htmlFor="email">Email Address</label><br>
             </br>
             <input
+            required
                 id="email"
                 name="email"
                 type="email"
@@ -27,6 +32,7 @@ export function LoginForm() {
             <label htmlFor="password">Password</label>
             <br></br>
             <input
+            required
                 id="password"
                 name="password"
                 type="password"

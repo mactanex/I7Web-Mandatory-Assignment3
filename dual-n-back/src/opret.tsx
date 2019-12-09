@@ -14,11 +14,12 @@ export function OpretForm() {
             alert(JSON.stringify(values, null, 2));
         },
     });
-    return (
+    return (        
         <form onSubmit={formik.handleSubmit}>
             <label htmlFor="email">Email Address</label><br>
             </br>
             <input
+            required
                 id="email"
                 name="email"
                 type="email"
@@ -28,6 +29,7 @@ export function OpretForm() {
             <label htmlFor="password">Password</label>
             <br></br>
             <input
+            required
                 id="password"
                 name="password"
                 type="password"
@@ -37,13 +39,14 @@ export function OpretForm() {
             <label htmlFor="password">Repeat Password</label>
             <br></br>
             <input
+            required
                 id="repeatedPassword"
                 name="repeatedPassword"
                 type="password"
                 onChange={formik.handleChange}
                 value={formik.values.repeatedPassword}
             /><br></br>
-            <button type="submit">Login</button>
+            <button type="submit">Opret</button>
         </form>
     );
 };
