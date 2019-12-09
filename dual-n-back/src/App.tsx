@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { LoginForm } from "./login";
 import { OpretForm } from "./opret";
 import { ApiService } from "./services/ApiService";
-const myUglyAssApiService = new ApiService();
+const myApiService = new ApiService();
 export interface IState {
   gameRunning: boolean;
   gridSize: number;
@@ -36,6 +36,10 @@ class App extends React.Component<{}, IState> {
 
   componentDidMount() {
     this.connect();
+    const token = myApiService.getAccessTokenFromLocalStorage()
+    if(token) {
+      this.setState({authenticated: true});
+    }
   }
 
   connect = () => {
@@ -66,7 +70,7 @@ class App extends React.Component<{}, IState> {
       that.timeout = that.timeout + that.timeout; //increment retry interval
       connectInterval = setTimeout(this.check, Math.min(10000, that.timeout)); //call check function after timeout
     };
-    ws.onmessage = msg => console.log(msg);
+    ws.onmessage = msg => this.setState({highscores: JSON.parse(msg.data)});
     // websocket onerror event listener
     ws.onerror = (err: any) => {
       console.error(
@@ -200,8 +204,9 @@ class App extends React.Component<{}, IState> {
         this.setState({ lives: this.state.lives - 1 });
       } else {
         //call update api
-        myUglyAssApiService.updateHighscore(nextScore);
+        myApiService.updateHighscore(nextScore);
         this.setState({ gameRunning: false, lives: 3, score: 0 });
+        nextScore = 0;
       }
     }
   };

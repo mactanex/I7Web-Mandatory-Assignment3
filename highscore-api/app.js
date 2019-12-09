@@ -72,7 +72,7 @@ const wsServer = new Server({
 });
 
 wsServer.on('connection', () => {
-  wsServer.clients.forEach(c => c.send("Hej"))
+ 
 })
 
 module.exports.app = app;

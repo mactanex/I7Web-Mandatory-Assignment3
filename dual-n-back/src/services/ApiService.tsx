@@ -23,13 +23,13 @@ export class ApiService {
 
       public Opret = async (username: string, password: string) =>
       await axios
-        .post("http://localhost:3333/api/opret", {
+        .post("http://localhost:3333/api/signup", {
           username: username,
           password: password
         })
         .then(response => {
           // handle success
-          console.log(`Response received from backend: ${response}`);
+          console.log(`Response received from backend: ${response.status}`);
         })
         .catch(error => {
           // handle error
@@ -54,8 +54,8 @@ export class ApiService {
       )
       .then(response => {
         // handle success
-        console.log(`Token received from backend: ${response.data.token}`);
-        this.setAccessTokenInLocalStorage(response.data.token);
+        
+        
       })
       .catch(error => {
         // handle error
@@ -83,7 +83,7 @@ export class ApiService {
   private setAccessTokenInLocalStorage = (token: string) => {
     return localStorage.setItem("ACCESS_TOKEN", token);
   };
-  private getAccessTokenFromLocalStorage = () => {
+  public getAccessTokenFromLocalStorage = () => {
     return localStorage.getItem("ACCESS_TOKEN");
   };
 }
