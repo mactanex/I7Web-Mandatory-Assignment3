@@ -1,16 +1,22 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import logo from "./logo.svg";
 import { Button, Col, Container, Row } from "reactstrap";
 import "./App.scss";
 
 import Game from "./Game/Game";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { LoginForm } from "./login";
+import { OpretForm } from "./opret";
+
 
 export interface IState {
   gameRunning: boolean;
   gridSize: number;
   score: number;
   ws: WebSocket | null;
+  lives: number;
+  authenticated: boolean,
+  highscores: number[];
 }
 
 class App extends React.Component<{}, IState> {
@@ -21,7 +27,10 @@ class App extends React.Component<{}, IState> {
       gameRunning: false,
       gridSize: 3,
       score: 0,
-      ws: null
+      ws: null,
+      lives: 3,
+      authenticated: false,
+      highscores: [0, 0, 0, 0, 0]
     };
   }
 
@@ -80,58 +89,94 @@ class App extends React.Component<{}, IState> {
 
   public render() {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to React</h1>
-        </header>
-        <Container>
-          <Row>
-            <Col xs='3'>
-              <input
-                type='range'
-                min='3'
-                max='5'
-                className='slider'
-                value={this.state.gridSize}
-                onInput={this.setGridSize}
-                onChange={this.setGridSize}
-              />
-            </Col>
-            <Col xs='6'>
-              <Game
-                rows={this.state.gridSize}
-                columns={this.state.gridSize}
-                running={this.state.gameRunning}
-                onScoreChange={this.onScoreChange}
-              />
-            </Col>
-            <Col xs='3'>
-              <Row>
-                <Col xs='12'>
-                  <Button
-                    color='primary'
-                    className={this.state.gameRunning ? "hidden" : ""}
-                    onClick={this.onPlay}
-                  >
-                    Play
+      <Router>
+        <div className='App'>
+          <header className='App-header'>
+            <nav>
+              <p><Link to="/"> Game </Link>
+                <br></br>
+                <Link to="/opret"> Opret </Link>
+                <br></br>
+                <Link to="/login"> login </Link> </p>
+            </nav>
+          </header>
+          {(this.state.authenticated && <Container>
+            <Row>
+              <Col xs='3'>
+                <input
+                  type='range'
+                  min='3'
+                  max='5'
+                  className='slider'
+                  value={this.state.gridSize}
+                  onInput={this.setGridSize}
+                  onChange={this.setGridSize}
+                />
+              </Col>
+              <Col xs='6' >
+                <Game
+                  rows={this.state.gridSize}
+                  columns={this.state.gridSize}
+                  running={this.state.gameRunning}
+                  onScoreChange={this.onScoreChange}
+                />
+              </Col>
+
+              <Col xs='3'>
+                <Row>
+                  <Col xs='12'>
+                    <Button
+                      color='primary'
+                      className={this.state.gameRunning ? "hidden" : ""}
+                      onClick={this.onPlay}
+                    >
+                      Play
                   </Button>
-                  <Button
-                    color='primary'
-                    className={!this.state.gameRunning ? "hidden" : ""}
-                    onClick={this.onPause}
-                  >
-                    Pause
+                    <Button
+                      color='primary'
+                      className={!this.state.gameRunning ? "hidden" : ""}
+                      onClick={this.onPause}
+                    >
+                      Pause
                   </Button>
-                </Col>
-              </Row>
-              <Row>
-                <p>{this.state.score}</p>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <p>Score: {this.state.score}</p> <br></br>
+                  <p>Lives: {this.state.lives}</p>
+                </Row>
+                <br></br>
+                <Row>
+                  <p>First: {this.state.highscores[0]}</p>
+                </Row>
+                <Row>
+                  <p>Second: {this.state.highscores[1]}</p>
+                </Row>
+                <Row>
+                  <p>Third: {this.state.highscores[2]}</p>
+                </Row>
+                <Row>
+                  <p>Fourth: {this.state.highscores[3]}</p>
+                </Row>
+                <Row>
+                  <p>Fifth: {this.state.highscores[4]}</p>
+                </Row>
+              </Col>
+            </Row>
+          </Container>
+          ) ||
+            <p>Du er ikke logget ind</p>}
+          <Switch>
+            <Route path="/login">
+              <LoginForm></LoginForm>
+            </Route>
+            <Route path="/opret">
+              <OpretForm></OpretForm>
+            </Route>
+          </Switch>
+
+        </div>
+      </Router>
     );
   }
 
@@ -149,6 +194,16 @@ class App extends React.Component<{}, IState> {
 
   private onScoreChange = (prevScore: number, nextScore: number) => {
     this.setState({ score: nextScore });
+    if (nextScore - prevScore === -50) {
+      if (this.state.lives !== 1) {
+        this.setState({ lives: this.state.lives - 1 });
+      } else {
+        //call update api
+        this.setState({ gameRunning: false, lives: 3, score: 0 });
+      }
+    }
+
+
   };
 }
 
