@@ -20,12 +20,17 @@ export class ApiService {
         // always executed
       });
 
-  public updateHighscore = async (username: string, password: string) =>
+  public updateHighscore = async (score: number) =>
     await axios
-      .post("http://localhost:3333/login", {
-        username: username,
-        password: password
-      })
+      .post(
+        `http://localhost:3333/api/highscore?highscore=${score}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + this.getAccessTokenFromLocalStorage()
+          }
+        }
+      )
       .then(response => {
         // handle success
         console.log(`Token received from backend: ${response.data.token}`);
