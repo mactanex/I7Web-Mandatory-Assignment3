@@ -200,7 +200,7 @@ class App extends React.Component<{}, IState> {
         this.setState({ lives: this.state.lives - 1 });
       } else {
         //call update api
-        myUglyAssApiService.updateHighscore();
+        myUglyAssApiService.updateHighscore(nextScore);
         this.setState({ gameRunning: false, lives: 3, score: 0 });
       }
     }
