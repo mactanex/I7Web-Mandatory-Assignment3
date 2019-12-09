@@ -1,9 +1,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { ApiService } from './services/ApiService';
 
 
 export function LoginForm() {
-
+    const API = new ApiService();
    
 
     // Pass the useFormik() hook initial form values and a submit function that will
@@ -14,7 +15,7 @@ export function LoginForm() {
             password: '',
         },
         onSubmit: (values: any) => {
-            alert(JSON.stringify(values, null, 2));
+            API.login(values.email, values.password)
         },
     });
     return (
