@@ -66,19 +66,14 @@ const port = 3333;
 const httpServer = app.listen(port, () =>
   console.log(`Mandatory assignment 3 listening on port ${port}!`)
 );
+
 const wsServer = new Server({
   server: httpServer
 });
 
-wsServer.on("connection", websocket => {
-  websocket.send("Hello from the two-way WebSocket server");
-  websocket.onmessage = message =>
-    console.log(`The server received: ${message["data"]}`);
-  websocket.onerror = error =>
-    console.log(`The server received: ${error["code"]}`);
-  websocket.onclose = why =>
-    console.log(`The server received: ${why.code} ${why.reason}`);
-});
+wsServer.on('connection', () => {
+  wsServer.clients.forEach(c => c.send("Hej"))
+})
 
-module.exports = app;
-module.exports.wsServer = wsServer;
+module.exports.app = app;
+process.WebSocket = wsServer;
