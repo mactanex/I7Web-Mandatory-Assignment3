@@ -7,15 +7,15 @@ import Game from "./Game/Game";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { LoginForm } from "./login";
 import { OpretForm } from "./opret";
-
-
+import { ApiService } from "./services/ApiService";
+const myUglyAssApiService = new ApiService();
 export interface IState {
   gameRunning: boolean;
   gridSize: number;
   score: number;
   ws: WebSocket | null;
   lives: number;
-  authenticated: boolean,
+  authenticated: boolean;
   highscores: number[];
 }
 
@@ -93,88 +93,89 @@ class App extends React.Component<{}, IState> {
         <div className='App'>
           <header className='App-header'>
             <nav>
-              <p><Link to="/"> Game </Link>
+              <p>
+                <Link to='/'> Game </Link>
                 <br></br>
-                <Link to="/opret"> Opret </Link>
+                <Link to='/opret'> Opret </Link>
                 <br></br>
-                <Link to="/login"> login </Link> </p>
+                <Link to='/login'> login </Link>{" "}
+              </p>
             </nav>
           </header>
-          {(this.state.authenticated && <Container>
-            <Row>
-              <Col xs='3'>
-                <input
-                  type='range'
-                  min='3'
-                  max='5'
-                  className='slider'
-                  value={this.state.gridSize}
-                  onInput={this.setGridSize}
-                  onChange={this.setGridSize}
-                />
-              </Col>
-              <Col xs='6' >
-                <Game
-                  rows={this.state.gridSize}
-                  columns={this.state.gridSize}
-                  running={this.state.gameRunning}
-                  onScoreChange={this.onScoreChange}
-                />
-              </Col>
+          {(this.state.authenticated && (
+            <Container>
+              <Row>
+                <Col xs='3'>
+                  <input
+                    type='range'
+                    min='3'
+                    max='5'
+                    className='slider'
+                    value={this.state.gridSize}
+                    onInput={this.setGridSize}
+                    onChange={this.setGridSize}
+                  />
+                </Col>
+                <Col xs='6'>
+                  <Game
+                    rows={this.state.gridSize}
+                    columns={this.state.gridSize}
+                    running={this.state.gameRunning}
+                    onScoreChange={this.onScoreChange}
+                  />
+                </Col>
 
-              <Col xs='3'>
-                <Row>
-                  <Col xs='12'>
-                    <Button
-                      color='primary'
-                      className={this.state.gameRunning ? "hidden" : ""}
-                      onClick={this.onPlay}
-                    >
-                      Play
-                  </Button>
-                    <Button
-                      color='primary'
-                      className={!this.state.gameRunning ? "hidden" : ""}
-                      onClick={this.onPause}
-                    >
-                      Pause
-                  </Button>
-                  </Col>
-                </Row>
-                <Row>
-                  <p>Score: {this.state.score}</p> <br></br>
-                  <p>Lives: {this.state.lives}</p>
-                </Row>
-                <br></br>
-                <Row>
-                  <p>First: {this.state.highscores[0]}</p>
-                </Row>
-                <Row>
-                  <p>Second: {this.state.highscores[1]}</p>
-                </Row>
-                <Row>
-                  <p>Third: {this.state.highscores[2]}</p>
-                </Row>
-                <Row>
-                  <p>Fourth: {this.state.highscores[3]}</p>
-                </Row>
-                <Row>
-                  <p>Fifth: {this.state.highscores[4]}</p>
-                </Row>
-              </Col>
-            </Row>
-          </Container>
-          ) ||
-            <p>Du er ikke logget ind</p>}
+                <Col xs='3'>
+                  <Row>
+                    <Col xs='12'>
+                      <Button
+                        color='primary'
+                        className={this.state.gameRunning ? "hidden" : ""}
+                        onClick={this.onPlay}
+                      >
+                        Play
+                      </Button>
+                      <Button
+                        color='primary'
+                        className={!this.state.gameRunning ? "hidden" : ""}
+                        onClick={this.onPause}
+                      >
+                        Pause
+                      </Button>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <p>Score: {this.state.score}</p> <br></br>
+                    <p>Lives: {this.state.lives}</p>
+                  </Row>
+                  <br></br>
+                  <Row>
+                    <p>First: {this.state.highscores[0]}</p>
+                  </Row>
+                  <Row>
+                    <p>Second: {this.state.highscores[1]}</p>
+                  </Row>
+                  <Row>
+                    <p>Third: {this.state.highscores[2]}</p>
+                  </Row>
+                  <Row>
+                    <p>Fourth: {this.state.highscores[3]}</p>
+                  </Row>
+                  <Row>
+                    <p>Fifth: {this.state.highscores[4]}</p>
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
+          )) || <p>Du er ikke logget ind</p>}
           <Switch>
-            <Route path="/login">
+            <Route path='/login'>
               <LoginForm></LoginForm>
             </Route>
-            <Route path="/opret">
+            <Route path='/opret'>
               <OpretForm></OpretForm>
             </Route>
           </Switch>
-
         </div>
       </Router>
     );
@@ -199,11 +200,10 @@ class App extends React.Component<{}, IState> {
         this.setState({ lives: this.state.lives - 1 });
       } else {
         //call update api
+        myUglyAssApiService.updateHighscore(nextScore);
         this.setState({ gameRunning: false, lives: 3, score: 0 });
       }
     }
-
-
   };
 }
 
