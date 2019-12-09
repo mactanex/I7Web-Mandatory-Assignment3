@@ -6,6 +6,8 @@ import "./App.scss";
 import Game from "./Game/Game";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { LoginForm } from "./login";
+import { OpretForm } from "./opret";
+
 
 export interface IState {
   gameRunning: boolean;
@@ -98,7 +100,7 @@ class App extends React.Component<{}, IState> {
                 <Link to="/login"> login </Link> </p>
             </nav>
           </header>
-          {this.state.authenticated && <Container>
+          {(this.state.authenticated && <Container>
             <Row>
               <Col xs='3'>
                 <input
@@ -162,13 +164,14 @@ class App extends React.Component<{}, IState> {
               </Col>
             </Row>
           </Container>
-          }
+          ) ||
+            <p>Du er ikke logget ind</p>}
           <Switch>
             <Route path="/login">
               <LoginForm></LoginForm>
             </Route>
             <Route path="/opret">
-              <LoginForm></LoginForm>
+              <OpretForm></OpretForm>
             </Route>
           </Switch>
 
