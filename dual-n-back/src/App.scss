@@ -1,3 +1,10 @@
+/* Sass part of the scss file */
+
+$primary: #42f598;
+$secondary: #f5b453;
+$alert: #ff0000;
+
+
 .App {
   text-align: center;
 }
@@ -8,10 +15,16 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: $primary;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: $secondary;
+}
+
+.nav {
+  Button {
+    background-color: $secondary;
+  }
 }
 
 .App-title {

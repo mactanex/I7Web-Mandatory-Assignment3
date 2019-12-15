@@ -98,11 +98,11 @@ class App extends React.Component<{}, IState> {
           <header className='App-header'>
             <nav>
               <p>
-                <Link to='/'> Game </Link>
+                <Button color='secondary'><Link to='/'> Game </Link></Button>
                 <br></br>
-                <Link to='/opret'> Opret </Link>
+                <Button color='secondary'><Link to='/opret'> Opret </Link></Button>
                 <br></br>
-                <Link to='/login'> login </Link>{" "}
+                <Button color='secondary'><Link to='/login'> login </Link></Button>{" "}
               </p>
             </nav>
           </header>
