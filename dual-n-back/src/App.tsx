@@ -4,7 +4,7 @@ import { Button, Col, Container, Row } from "reactstrap";
 import "./App.scss";
 
 import Game from "./Game/Game";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LoginForm } from "./login";
 import { OpretForm } from "./opret";
 import { ApiService } from "./services/ApiService";

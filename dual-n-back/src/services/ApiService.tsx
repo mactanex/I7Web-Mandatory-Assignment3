@@ -11,6 +11,7 @@ export class ApiService {
         // handle success
         console.log(`Token received from backend: ${response.data.token}`);
         this.setAccessTokenInLocalStorage(response.data.token);
+        window.location.href = "/";
       })
       .catch(error => {
         // handle error
@@ -18,7 +19,7 @@ export class ApiService {
       })
       .then(() => {
         // always executed
-        window.location.href = "/";
+
       });
 
 
@@ -31,6 +32,7 @@ export class ApiService {
       .then(response => {
         // handle success
         console.log(`Response received from backend: ${response.status}`);
+        window.location.href = "/login";
       })
       .catch(error => {
         // handle error
@@ -38,6 +40,7 @@ export class ApiService {
       })
       .then(() => {
         // always executed
+
       });
 
 
