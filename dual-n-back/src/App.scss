@@ -1,6 +1,6 @@
 /* Sass part of the scss file */
 
-$primary: #42f598;
+$primary: #235c3e;
 $secondary: #f5b453;
 $alert: #ff0000;
 
@@ -16,16 +16,35 @@ $alert: #ff0000;
 
 .App-header {
   background-color: $primary;
-  height: 150px;
+  height: 75px;
   padding: 20px;
   color: $secondary;
 }
 
-.nav {
-  Button {
-    background-color: $secondary;
-  }
+
+
+ul {
+  margin-right: 42%;
+  list-style-type: none;
+  overflow: hidden;
 }
+
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111111;
+} 
 
 .App-title {
   font-size: 1.5em;

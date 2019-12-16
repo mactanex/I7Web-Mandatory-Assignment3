@@ -18,26 +18,27 @@ export class ApiService {
       })
       .then(() => {
         // always executed
+        window.location.href = "/";
       });
 
 
-      public Opret = async (username: string, password: string) =>
-      await axios
-        .post("http://localhost:3333/api/signup", {
-          username: username,
-          password: password
-        })
-        .then(response => {
-          // handle success
-          console.log(`Response received from backend: ${response.status}`);
-        })
-        .catch(error => {
-          // handle error
-          console.log(error);
-        })
-        .then(() => {
-          // always executed
-        });
+  public Opret = async (username: string, password: string) =>
+    await axios
+      .post("http://localhost:3333/api/signup", {
+        username: username,
+        password: password
+      })
+      .then(response => {
+        // handle success
+        console.log(`Response received from backend: ${response.status}`);
+      })
+      .catch(error => {
+        // handle error
+        console.log(error);
+      })
+      .then(() => {
+        // always executed
+      });
 
 
   public updateHighscore = async (score: number) =>
@@ -54,8 +55,8 @@ export class ApiService {
       )
       .then(response => {
         // handle success
-        
-        
+
+
       })
       .catch(error => {
         // handle error
@@ -69,12 +70,12 @@ export class ApiService {
     const token = this.getAccessTokenFromLocalStorage();
     const headerData = token
       ? {
-          ...options.headers,
-          Authorization: "Bearer " + token
-        }
+        ...options.headers,
+        Authorization: "Bearer " + token
+      }
       : {
-          ...options.headers
-        };
+        ...options.headers
+      };
     return Object.assign({}, options, {
       headers: headerData
     });

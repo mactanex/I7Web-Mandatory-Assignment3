@@ -37,8 +37,8 @@ class App extends React.Component<{}, IState> {
   componentDidMount() {
     this.connect();
     const token = myApiService.getAccessTokenFromLocalStorage()
-    if(token) {
-      this.setState({authenticated: true});
+    if (token) {
+      this.setState({ authenticated: true });
     }
   }
 
@@ -70,7 +70,7 @@ class App extends React.Component<{}, IState> {
       that.timeout = that.timeout + that.timeout; //increment retry interval
       connectInterval = setTimeout(this.check, Math.min(10000, that.timeout)); //call check function after timeout
     };
-    ws.onmessage = msg => this.setState({highscores: JSON.parse(msg.data)});
+    ws.onmessage = msg => this.setState({ highscores: JSON.parse(msg.data) });
     // websocket onerror event listener
     ws.onerror = (err: any) => {
       console.error(
@@ -91,19 +91,26 @@ class App extends React.Component<{}, IState> {
     if (!ws || ws.readyState === WebSocket.CLOSED) this.connect(); //check if websocket instance is closed, if so call `connect` function.
   };
 
+  logout = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   public render() {
     return (
       <Router>
         <div className='App'>
           <header className='App-header'>
             <nav>
-              <p>
-                <Button color='secondary'><Link to='/'> Game </Link></Button>
-                <br></br>
-                <Button color='secondary'><Link to='/opret'> Opret </Link></Button>
-                <br></br>
-                <Button color='secondary'><Link to='/login'> login </Link></Button>{" "}
-              </p>
+              <ul>
+                {(!this.state.authenticated && (
+                  <div>
+                    <li><a color='secondary' href="/login">Login</a>{" "}</li>
+                    <li><a color='secondary' href="/opret">Signup</a></li>
+                  </div>
+                )) || <li><a color='secondary' onClick={this.logout}>Logout</a></li>}
+                <li><a color='secondary' href="/">Game</a></li>
+              </ul>
             </nav>
           </header>
           {(this.state.authenticated && (
